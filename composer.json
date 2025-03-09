@@ -1,0 +1,18 @@
+{
+    "name": "ongudidan/textsms",
+    "description": "This is a busk SMS package that enable developers to send multiple text sms in bulk with just a single click",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "TextSms\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ongudidan",
+            "email": "ongudidan@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}

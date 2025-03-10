@@ -7,7 +7,7 @@ TextSMS is a Yii2 package that provides a seamless way to integrate SMS function
 🚀 Installation
 Install the package via Composer:
 
-`composer require yourvendor/textsms`<br>
+`composer require ongudidan/textsms`<br>
 ⚙️ Configuration
 Add the following API credentials to your Yii2 params.php file:
 

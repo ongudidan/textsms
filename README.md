@@ -7,47 +7,44 @@ TextSMS is a Yii2 package that provides a seamless way to integrate SMS function
 🚀 Installation
 Install the package via Composer:
 
-sh
-Copy
-Edit
-composer require yourvendor/textsms
+`composer require yourvendor/textsms`<br>
 ⚙️ Configuration
 Add the following API credentials to your Yii2 params.php file:
 
-`return [
-    // TextSMS API Configuration
-    'textsmsPartnerID' => '12712',
-    'textsmsApiKey' => 'd1fd14bce04b434f8c78325ebd8caba4',
-    'textsmsShortcode' => 'TextSMS',
-];`
+`return [`<br>
+    `// TextSMS API Configuration`<br>
+    `'textsmsPartnerID' => '12712',`<br>
+    `'textsmsApiKey' => 'd1fd14bce04b434f8c78325ebd8caba4',`<br>
+    `'textsmsShortcode' => 'TextSMS',`<br>
+`];`<br>
 🛠 Usage
 Sending an SMS
 To send an SMS, use the following method:
 
-`use yourvendor\textsms\TextSms;`
+`use yourvendor\textsms\TextSms;`<br>
 
-`$sms = new TextSms();
-$response = $sms->send('254712345678', 'Hello from Yii2!');`
+`$sms = new TextSms();`<br>
+`$response = $sms->send('254712345678', 'Hello from Yii2!');`<br>
 
-`if ($response['response-code'] == 200) {
-    echo "SMS sent successfully!";
-} else {
-    echo "Failed to send SMS: " . $response['response-description'];
-}`
+`if ($response['response-code'] == 200) {`<br>
+    `echo "SMS sent successfully!";`<br>
+`} else {`<br>
+    `echo "Failed to send SMS: " . $response['response-description'];`<br>
+`}`<br>
 🔄 Response Format
 The API will return a response in the following format:
 
-`{
-  "responses": [
-    {
-      "response-code": 200,
-      "response-description": "Success",
-      "mobile": "254712345678",
-      "messageid": "1869610817",
-      "networkid": 1
-    }
-  ]
-}`
+`{`
+ ` "responses": [`<br>
+   ` {`<br>
+      `"response-code": 200,`<br>
+     ` "response-description": "Success",`<br>
+      `"mobile": "254712345678",`<br>
+     ` "messageid": "1869610817",`<br>
+      `"networkid": 1`<br>
+   ` }`<br>
+ ` ]`<br>
+`}`<br>
 📜 License
 This package is licensed under the MIT License. See the LICENSE file for details.
 

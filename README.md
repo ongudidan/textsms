@@ -1,7 +1,5 @@
 📩 TextSMS - Simple SMS Integration for Yii2
 
-
-
 TextSMS is a Yii2 package that provides a seamless way to integrate SMS functionality into your application using a simple API.
 
 🚀 Installation

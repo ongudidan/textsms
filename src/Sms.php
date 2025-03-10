@@ -2,74 +2,63 @@
 
 namespace TextSms;
 
-class TextSms
+use Yii;
+use GuzzleHttp\Client;
+
+class Sms
 {
-
-
     // textsms send SMS
-    public function send($mobile, $message)
+    public static function send($mobile, $message)
     {
         $url = 'https://sms.textsms.co.ke/api/services/sendsms/';
 
-        $data = array(
-
-            //Fill in the request parameters with valid values
-            'partnerID' => $_SERVER['TEXTSMS_PARTNER_ID'],
-            'apikey' => $_SERVER['TEXTSMS_API_KEY'],
+        $data = [
+            'partnerID' => Yii::$app->params['textsmsPartnerID'],
+            'apikey' => Yii::$app->params['textsmsApiKey'],
             'mobile' => $mobile,
             'message' => $message,
-            'shortcode' => $_SERVER['TEXTSMS_SHORTCODE'],
-        );
+            'shortcode' => Yii::$app->params['textsmsShortcode'],
+        ];
 
-
-        $smsService = $this->sendRequest($url, $data);
-
-        return $smsService;
+        return self::sendRequest($url, $data);
     }
 
     // check balance for textsms
-    public function balance()
+    public static function balance()
     {
         $url = 'https://sms.textsms.co.ke/api/services/getbalance/';
 
-        $data = array(
-            //Fill in the request parameters with valid values
-            'partnerID' => $_SERVER['TEXTSMS_PARTNER_ID'],
-            'apikey' => $_SERVER['TEXTSMS_API_KEY'],
-        );
+        $data = [
+            'partnerID' => Yii::$app->params['textsmsPartnerID'],
+            'apikey' => Yii::$app->params['textsmsApiKey'],
+        ];
 
-        $smsService = $this->sendRequest($url, $data);
-
-        return $smsService;
+        return self::sendRequest($url, $data);
     }
 
     // check status for textsms
-    public function status($messageId)
+    public static function status($messageId)
     {
         $url = 'https://sms.textsms.co.ke/api/services/getdlr/';
 
-        $data = array(
-            //Fill in the request parameters with valid values
-            'partnerID' => $_SERVER['TEXT_SMS_PARTNER_ID'],
-            'apikey' => $_SERVER['TEXTSMS_API_KEY'],
+        $data = [
+            'partnerID' => Yii::$app->params['textsmsPartnerID'],
+            'apikey' => Yii::$app->params['textsmsApiKey'],
             'messageID' => $messageId,
-        );
-        $smsService = $this->sendRequest($url, $data);
+        ];
 
-        return $smsService;
+        return self::sendRequest($url, $data);
     }
 
-    private function sendRequest($url, $data)
+    // Make sendRequest static and use Guzzle instead of curl
+    private static function sendRequest($url, $data)
     {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+        $client = new Client();
+        $response = $client->post($url, [
+            'json' => $data,
+            'headers' => ['Content-Type' => 'application/json']
+        ]);
 
-        $response = curl_exec($curl);
-        curl_close($curl);
-        return $response;
+        return $response->getBody()->getContents();
     }
 }

@@ -13,9 +13,9 @@ Add the following API credentials to your Yii2 params.php file:
 
 `return [`<br>
     `// TextSMS API Configuration`<br>
-    `'textsmsPartnerID' => '12712',`<br>
-    `'textsmsApiKey' => 'd1fd14bce04b434f8c78325ebd8caba4',`<br>
-    `'textsmsShortcode' => 'TextSMS',`<br>
+    `'textsmsPartnerID' => '1234',`<br>
+    `'textsmsApiKey' => 'd1fd14bce04b434f8c785ebd8caba4',`<br>
+    `'textsmsShortcode' => 'SMS',`<br>
 `];`<br>
 🛠 Usage
 Sending an SMS

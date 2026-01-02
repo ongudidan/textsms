@@ -2,63 +2,91 @@
 
 namespace TextSms;
 
-use Yii;
+
 use GuzzleHttp\Client;
 
 class Sms
 {
-    // textsms send SMS
-    public static function send($mobile, $message)
+    /**
+     * Send SMS
+     * 
+     * @param string $partnerID
+     * @param string $apikey
+     * @param string $shortcode
+     * @param string $mobile
+     * @param string $message
+     * @return mixed
+     */
+    public static function send($partnerID, $apikey, $shortcode, $mobile, $message)
     {
         $url = 'https://sms.textsms.co.ke/api/services/sendsms/';
 
         $data = [
-            'partnerID' => Yii::$app->params['textsmsPartnerID'],
-            'apikey' => Yii::$app->params['textsmsApiKey'],
+            'partnerID' => $partnerID,
+            'apikey' => $apikey,
             'mobile' => $mobile,
             'message' => $message,
-            'shortcode' => Yii::$app->params['textsmsShortcode'],
+            'shortcode' => $shortcode,
         ];
 
         return self::sendRequest($url, $data);
     }
 
-    // check balance for textsms
-    public static function balance()
+    /**
+     * Check Balance
+     * 
+     * @param string $partnerID
+     * @param string $apikey
+     * @return mixed
+     */
+    public static function balance($partnerID, $apikey)
     {
         $url = 'https://sms.textsms.co.ke/api/services/getbalance/';
 
         $data = [
-            'partnerID' => Yii::$app->params['textsmsPartnerID'],
-            'apikey' => Yii::$app->params['textsmsApiKey'],
+            'partnerID' => $partnerID,
+            'apikey' => $apikey,
         ];
 
         return self::sendRequest($url, $data);
     }
 
-    // check status for textsms
-    public static function status($messageId)
+    /**
+     * Check Delivery Status
+     * 
+     * @param string $partnerID
+     * @param string $apikey
+     * @param string $messageId
+     * @return mixed
+     */
+    public static function status($partnerID, $apikey, $messageId)
     {
         $url = 'https://sms.textsms.co.ke/api/services/getdlr/';
 
         $data = [
-            'partnerID' => Yii::$app->params['textsmsPartnerID'],
-            'apikey' => Yii::$app->params['textsmsApiKey'],
+            'partnerID' => $partnerID,
+            'apikey' => $apikey,
             'messageID' => $messageId,
         ];
 
         return self::sendRequest($url, $data);
     }
 
-    // Make sendRequest static and use Guzzle instead of curl
     private static function sendRequest($url, $data)
     {
         $client = new Client();
-        $response = $client->post($url, [
-            'json' => $data,
-            'headers' => ['Content-Type' => 'application/json']
-        ]);
+        try {
+            $response = $client->post($url, [
+                'json' => $data,
+                'headers' => ['Content-Type' => 'application/json']
+            ]);
 
-        return $response->getBody()->getContents();
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (\Exception $e) {
+            return [
+                'response-code' => 500,
+                'response-description' => $e->getMessage()
+            ];
+        }
     }
 }

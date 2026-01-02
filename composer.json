@@ -1,6 +1,6 @@
 {
     "name": "ongudidan/textsms",
-    "description": "This is a busk SMS package that enable developers to send multiple text sms in bulk with just a single click",
+    "description": "A universal, framework-agnostic PHP package for sending bulk SMS via TextSMS API. Compatible with Laravel, Yii2, Symfony, and Vanilla PHP. Features include single/bulk messaging, balance checking, and delivery status tracking.",
     "type": "library",
     "autoload": {
         "psr-4": {
